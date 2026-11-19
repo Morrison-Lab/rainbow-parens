@@ -61,7 +61,7 @@ jobs:
 
         1. The filter adds nothing to non-HTML output, a bad
            `rainbow-parens` value stops the render with a non-zero exit,
-           and the script leaves strings and comments in code uncoloured.
+           and the script leaves strings and comments in code uncolored.
         2. The README and `example.qmd` describe what the code does.
         3. The version in `_extension.yml` matches the release being
            prepared.
