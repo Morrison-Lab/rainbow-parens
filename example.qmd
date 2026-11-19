@@ -1,0 +1,16 @@
+---
+title: My Extension Example
+format:
+  html:
+    output-file: index.html
+shortcodes:
+  - _extensions/myextension/myextension.lua
+---
+
+This document demonstrates the `myextension` shortcode.
+
+## Usage
+
+Use the shortcode in your document like this:
+
+{{< myextension >}}
