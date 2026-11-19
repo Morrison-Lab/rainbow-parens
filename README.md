@@ -4,6 +4,7 @@ A [Quarto](https://quarto.org/) extension that colors each pair of matching brac
 so a reader can see at a glance which `(` closes which `)`.
 It colors brackets in math and in code blocks of every language Quarto highlights (R, Python, Racket and the rest).
 PDF and other non-HTML output is unchanged.
+In revealjs slides only code is colored, because Quarto typesets slide math with MathJax 2 (see [Limits](#limits)).
 
 ## Installation
 
@@ -71,6 +72,9 @@ checking every pair of colors, not only neighbors:
   and Bootstrap's darkly `#222222`, its code background `#303030` and the slides' `#1c1e20` for the dark palette (4.65 to 9.68).
 
 The dark palette applies under Quarto's dark theme (`body.quarto-dark`) and the dark slide theme of the lab's qwt template (`body.qwt-dark`).
+On any other page, the script checks the page background whenever the body's or root's class changes,
+and adds `rp-dark`, which also selects the dark palette, while the background is dark (relative luminance below 0.179);
+so a site with a single dark theme such as `theme: darkly` gets the dark palette too.
 Override a color by setting `--rp-1` to `--rp-4` in your own stylesheet.
 In print and in the forced-colors (high-contrast) mode, brackets keep the text color.
 
@@ -85,6 +89,20 @@ For code, the script wraps each bracket in a `<span>` with the same class once t
 The script must run before MathJax loads, which Quarto's HTML template arranges:
 extension scripts come before its deferred MathJax script.
 A page that later replaces `window.MathJax` with its own configuration object would drop the render action.
+
+## Limits
+
+- **revealjs math.**
+  Quarto renders slide math with MathJax 2.7.9 through reveal.js's math plugin,
+  and MathJax 2 has no render actions, so brackets in slide math keep the text color.
+  Code on slides is colored.
+- **MathJax 4 only.**
+  On a page that loads MathJax 2 or 3 itself, or KaTeX, math is not colored.
+- **Unmatched brackets.**
+  A closer with no opener keeps the text color.
+  An opener with no closer, such as the `[` of the French interval `]0, 1[`, leaves every later bracket in that formula or code block one level deeper.
+  Brackets inside a token that Pandoc's highlighter does not class as a string, comment or character still count,
+  such as the `(` in the Racket symbol `|a(b|`.
 
 See [`example.qmd`](example.qmd) for a demonstration.
 It names the filter as `rainbow-parens`, because it uses this repository's own `_extensions/rainbow-parens/` copy;
