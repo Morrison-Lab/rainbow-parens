@@ -1,16 +1,43 @@
 ---
-title: My Extension Example
+title: "rainbow-parens example"
 format:
   html:
-    output-file: index.html
-shortcodes:
-  - _extensions/myextension/myextension.lua
+    theme:
+      light: cosmo
+      dark: darkly
+filters:
+  - rainbow-parens
 ---
 
-This document demonstrates the `myextension` shortcode.
+Each pair of brackets takes the colour of its nesting depth.
+Use the toggle at the top right to see the dark-theme colours.
 
-## Usage
+## Math
 
-Use the shortcode in your document like this:
+$$
+f(g(h(x))) + [0, 1) + \left( \frac{1}{2} \left[ a + \{b\} \right] \right)
+$$
 
-{{< myextension >}}
+Inline math works too: $(a + (b + (c + (d + (e)))))$.
+The fifth level starts the colours again.
+
+An author's own colour wins: ${\color{red} (x)}$.
+
+## Code
+
+```racket
+(define (sum-list lst)
+  (if (empty? lst)
+      0
+      (+ (first lst) (sum-list (rest lst))))) ; "(not this)"
+```
+
+```r
+mean(sapply(list(a = c(1, 2), b = c(3, 4)), function(v) sum(v[v > 1])))
+# (comments keep their colour)
+```
+
+```python
+print(sorted({k: len(v) for k, v in [("a", [1, 2]), ("b", [3])]}.items()))
+s = "(strings keep theirs)"
+```
