@@ -13,6 +13,9 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          # The deploy step authenticates with its own token input.
+          persist-credentials: false
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
@@ -52,10 +55,10 @@ jobs:
 
       - name: Ensure index page exists
         run: |
-          if [ ! -f "${{ env.QUARTO_OUTPUT }}/index.html" ]; then
-            first_html="$(find "${{ env.QUARTO_OUTPUT }}" -maxdepth 1 -type f -name '*.html' | head -n 1)"
+          if [ ! -f "$QUARTO_OUTPUT/index.html" ]; then
+            first_html="$(find "$QUARTO_OUTPUT" -maxdepth 1 -type f -name '*.html' | head -n 1)"
             if [ -n "$first_html" ]; then
-              cp "$first_html" "${{ env.QUARTO_OUTPUT }}/index.html"
+              cp "$first_html" "$QUARTO_OUTPUT/index.html"
             fi
           fi
 
