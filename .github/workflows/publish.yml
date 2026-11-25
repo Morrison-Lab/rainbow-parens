@@ -12,7 +12,7 @@ jobs:
       contents: write
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           # The deploy step authenticates with its own token input.
           persist-credentials: false
